@@ -44,6 +44,12 @@ def sort_bubble(lst: list) -> None:
 
 
 def merge_list(f_lst: list, s_lst: list) -> list:
+    """
+    Слияние списка с сортировкой
+    :param f_lst:
+    :param s_lst:
+    :return:
+    """
     new_lst = []
     f_amount = len(f_lst)
     s_amount = len(s_lst)
@@ -61,6 +67,11 @@ def merge_list(f_lst: list, s_lst: list) -> list:
     return new_lst
 
 def sort_merge(lst: list):
+    """
+    Сортировка слиянием
+    :param lst:
+    :return:
+    """
     amount = len(lst) // 2 # деление массива на два примерно равной длины
     f_lst = lst[:amount]
     s_lst = lst[amount:]
@@ -71,3 +82,19 @@ def sort_merge(lst: list):
         s_lst = sort_merge(s_lst)
 
     return merge_list(f_lst, s_lst)  # слияние двух отсортированных списков в один
+
+
+def sort_quick(lst: list) -> list:
+    """
+    Быстрая сортировка Хоара через рекурсию
+    :param lst:
+    :return:
+    """
+    if len(lst) > 1:
+        x = lst[len(lst) // 2]  # пороговое значение (для разделения на малые и большие)
+        low = [u for u in lst if u < x]
+        eq = [u for u in lst if u == x]
+        hi = [u for u in lst if u > x]
+        lst = sort_quick(low) + eq + sort_quick(hi)
+
+    return lst
