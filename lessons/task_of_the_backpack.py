@@ -33,20 +33,19 @@ class Backpack:
         else:
             return None
         for obj in lst:
-            if obj.price > best.price and obj.weight < best.weight:
-                best = obj
+            if obj.price > best.price:
+                if obj.weight < best.weight:
+                    best = obj
+                else:
+                    if self.remain >=
         return best
 
 
     def get_max_worth(self, *args: Object):
-        print(args)
-        for obj in args:
-            if self.remain >= obj.weight:
-                self.put_object(obj)
-            else:
-                min_price = min([o.price for o in self.objects])
+        lst = [obj for obj in args]
 
-        print(self.objects)
+
+        print(self.search_best_obj(lst))
 
 
 
