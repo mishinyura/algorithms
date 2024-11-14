@@ -13,17 +13,16 @@ def get_words(text: str) -> list:
     temp = ''
     for let in text:
         if let == ' ' and temp:
-            temp = reverse_word(temp)
-            lst.append(temp)
+            lst.append(reverse_word(temp))
             temp = ''
         else:
             temp += let
     if temp:
-        lst.append(temp)
+        lst.append(reverse_word(temp))
     return lst
 
 def main():
-    text = 'first_word second_word!!  d'
+    text = 'first_word second_word!! second_word!!'
     for i in get_words(text):
         print(i)
 
