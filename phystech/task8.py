@@ -72,10 +72,10 @@ class Graph():
         :return: Список объектов, пройдя по которым получим самый короткий путь.
         """
         obj = start
-        history = []
+        history = [obj]
         while True:
-            history.append(obj)
             obj = obj.get_obj_with_min_distance(ignore=history)
+            history.append(obj)
 
             if obj == end or len(history) == len(start.chain) + 1:
                 break
