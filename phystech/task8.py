@@ -27,6 +27,11 @@ class Node():
         return lst
 
     def get_obj_with_min_distance(self, ignore: list) -> 'Node':
+        """Находит соседа с минимальной дистанцией.
+        :param ignore: Список объктов, который игнорировать
+        даже в случае если это наилучший путь.
+        :return: Вернишу
+        """
         min_dist = None
         min_obj = None
         for obj, dist in self.chain.items():
@@ -40,23 +45,32 @@ class Node():
         return min_obj
 
 class Graph():
-    def __init__(self, matrix):
+    def __init__(self, matrix) -> None:
         self.matrix = matrix
         self.__history = []
         self.min_distance = 0
         self.path_min_distance = []
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f'{self.matrix}'
 
-    def draw(self):
+    def draw(self) -> None:
+        """Рисует связи каждой вершина графа.
+        :return: Результат выводит в консоль
+        """
         for i in range(len(self.matrix)):
             for j in range(len(self.matrix[i])):
                 if self.matrix[i][j]:
                     print(f'({i + 1})--{self.matrix[i][j]}--({j + 1})', end=f' ')
             print()
 
-    def get_min_path(self, start: Node, end: Node|None=None):
+    def get_min_path(self, start: Node, end: Node|None=None) -> list[Node]:
+        """Ищет самый короткий путь от start до end или последнего элемента в цепи.
+        :param start: Вершину (экземпляр Node), с которой начинаем путь.
+        :param end: Вершину (экземпляр Node). Если None,
+        то работа продолжится пока каждую вершину не пройдет.
+        :return: Список объектов, пройдя по которым получим самый короткий путь.
+        """
         obj = start
         history = []
         while True:
@@ -71,8 +85,6 @@ class Graph():
 def main():
     node1, node2, node3, node4 = Node(1), Node(2), Node(3), Node(4)
 
-    # chains = [[0, 10, 15, 20], [10, 0, 35, 25], [15, 35, 0, 30], [20, 25, 30, 0]]
-
     node1.chain = [(node2, 10), (node3, 15), (node4, 20)]
     node2.chain = [(node1, 10), (node3, 35), (node4, 25)]
     node3.chain = [(node1, 15), (node2, 35), (node4, 30)]
@@ -80,13 +92,14 @@ def main():
 
     nodes = [node1, node2, node3, node4]
     matrix = []
+
     for node in nodes:
         matrix.append(node.translate())
 
     graph = Graph(matrix)
     graph.draw()
+    print(matrix)
     print(graph.get_min_path(node3))
-    # print(graph.get_min_distance(node1))
 
 if __name__ == '__main__':
     main()
