@@ -1,13 +1,13 @@
 class Node():
-    def __init__(self, name: int):
+    def __init__(self, name: int) -> None:
         self.name = name
-        self.idx = name - 1
+        self.idx = id(self)
         self._chain = {}
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return str(self.name)
 
-    def __hash__(self):
+    def __hash__(self) -> int:
         return hash(self.idx)
 
     @property
@@ -26,7 +26,7 @@ class Node():
         lst.insert(self.idx, 0)
         return lst
 
-    def get_min_path(self, ignore: list):
+    def get_obj_with_min_distance(self, ignore: list) -> 'Node':
         min_dist = None
         min_obj = None
         for obj, dist in self.chain.items():
@@ -56,27 +56,20 @@ class Graph():
                     print(f'({i + 1})--{self.matrix[i][j]}--({j + 1})', end=f' ')
             print()
 
-    def get_min_distance(self, start: Node, end: Node|None=None):
+    def get_min_path(self, start: Node, end: Node|None=None):
         obj = start
-        prev = None
-        next = None
-        count = 0
+        history = []
         while True:
-            next = obj.get_min_path(ignore=self.__history)
-            prev = obj
-            obj = next
-            self.__history.append(prev)
-            count += 1
-            if count == 4:
+            history.append(obj)
+            obj = obj.get_obj_with_min_distance(ignore=history)
+
+            if obj == end or len(history) == len(start.chain) + 1:
                 break
-        print(self.__history)
+        return history
 
 
 def main():
-    node1 = Node(1)
-    node2 = Node(2)
-    node3 = Node(3)
-    node4 = Node(4)
+    node1, node2, node3, node4 = Node(1), Node(2), Node(3), Node(4)
 
     # chains = [[0, 10, 15, 20], [10, 0, 35, 25], [15, 35, 0, 30], [20, 25, 30, 0]]
 
@@ -92,7 +85,7 @@ def main():
 
     graph = Graph(matrix)
     graph.draw()
-    print(graph.get_min_distance(node3))
+    print(graph.get_min_path(node3))
     # print(graph.get_min_distance(node1))
 
 if __name__ == '__main__':
