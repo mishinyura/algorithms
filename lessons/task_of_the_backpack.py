@@ -27,25 +27,22 @@ class Backpack:
         self.objects.pop(index)
         self.remain += obj.weight
 
-    def search_best_obj(self, lst: list[Object]) -> Object | None:
-        if lst:
-            best = lst[0]
-        else:
-            return None
-        for obj in lst:
-            if obj.price > best.price:
-                if obj.weight < best.weight:
-                    best = obj
-                else:
-                    if self.remain >=
-        return best
-
+    def replace_obj(self, obj):
+        min_obj = obj[0]
+        for i in obj:
+            if min_obj.price > i.price:
+                min_obj = obj
+            print(min_obj)
 
     def get_max_worth(self, *args: Object):
-        lst = [obj for obj in args]
+        if args:
+            best = args[0]
+        else:
+            return None
+        for obj in args:
+            self.replace_obj(args)
 
 
-        print(self.search_best_obj(lst))
 
 
 
