@@ -76,10 +76,11 @@ class Graph():
         while True:
             obj = obj.get_obj_with_min_distance(ignore=history)
             history.append(obj)
+            if obj is None:
+                return history[:-1]
+            elif obj == end:
+                return history
 
-            if obj == end or len(history) == len(start.chain) + 1:
-                break
-        return history
 
 
 def main():
