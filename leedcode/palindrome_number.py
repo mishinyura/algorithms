@@ -52,6 +52,7 @@ class Solution:
 
 def main():
     solution = Solution(True)
+    print(0 % 2)
 
 
 if __name__ == '__main__':
